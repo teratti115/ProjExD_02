@@ -56,8 +56,8 @@ def main():
         (0, 5):pg.transform.rotozoom(kk_img_r,-90,1.0),  #下のキーを押しているとき
         (-5, 5):pg.transform.rotozoom(kk_img,45,1.0),  #左と下のキーを押しているとき
         (-5, 0):pg.transform.rotozoom(kk_img,0,1.0),  #左のキーを押しているとき
-    } 
-
+    }   #工科トンの進む方向と向きを決める。
+    acs = [a for a in range(1, 11)]
     while True:
         for event in pg.event.get():
             if event.type == pg.QUIT: 
@@ -73,7 +73,9 @@ def main():
             if key_lst[k]:
                 sum_mv[0] += mv[0]
                 sum_mv[1] += mv[1]
-        sum_mv_l = tuple(sum_mv)
+        sum_mv_l = tuple(sum_mv)  #sum_mvをタプルにする
+
+
             
         
         
@@ -81,10 +83,11 @@ def main():
         kk_rct.move_ip(sum_mv)
         if check_bound(kk_rct) != (True, True):
             kk_rct.move_ip(-sum_mv[0], -sum_mv[1])
+        avx, avy = vx*acs[min(tmr//500, 9)], vy*acs[min(tmr//500, 9)]
 
         screen.blit(bg_img, [0, 0])
         screen.blit(kk_muki[sum_mv_l], kk_rct)
-        bakudan_rct.move_ip(vx,vy)  #練習２
+        bakudan_rct.move_ip(avx,avy)  #練習２
         yoko, tate = check_bound(bakudan_rct)
         if not yoko:
             vx *= -1
