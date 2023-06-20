@@ -83,12 +83,7 @@ def main():
                 sum_mv[0] += mv[0]
                 sum_mv[1] += mv[1]
         sum_mv_l = tuple(sum_mv)  #sum_mvをタプルにする
-
-
-            
         
-        
-
         kk_rct.move_ip(sum_mv)
         if check_bound(kk_rct) != (True, True):
             kk_rct.move_ip(-sum_mv[0], -sum_mv[1])
