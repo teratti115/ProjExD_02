@@ -58,17 +58,23 @@ def main():
                 sum_mv[0] += mv[0]
                 sum_mv[1] += mv[1]
         kk_rct.move_ip(sum_mv)
+        if check_bound(kk_rct) != (True, True):
+            kk_rct.move_ip(-sum_mv[0], -sum_mv[1])
 
-
-        
         screen.blit(bg_img, [0, 0])
         screen.blit(kk_img, kk_rct)
         bakudan_rct.move_ip(vx,vy)  #練習２
+        yoko, tate = check_bound(bakudan_rct)
+        if not yoko:
+            vx *= -1
+        if not tate:
+            vy *= -1
+
         screen.blit(bakudan,bakudan_rct)
 
         pg.display.update()
         tmr += 1
-        clock.tick(10)
+        clock.tick(100)
 
 
 if __name__ == "__main__":
