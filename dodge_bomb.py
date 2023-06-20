@@ -30,6 +30,9 @@ def main():
     screen = pg.display.set_mode((WIDTH, HEIGHT))
     bg_img = pg.image.load("ex02/fig/pg_bg.jpg")
     kk_img = pg.image.load("ex02/fig/3.png")
+    kk_img_zako = pg.image.load("ex02/fig/8.png")
+    kk_img_zako = pg.transform.rotozoom(kk_img_zako, 0, 2.0)
+
     kk_img = pg.transform.rotozoom(kk_img, 0, 2.0)
     kk_img_r =pg.transform.flip(kk_img,True, False)
     kk_rct = kk_img.get_rect()
@@ -57,19 +60,24 @@ def main():
         (-5, 5):pg.transform.rotozoom(kk_img,45,1.0),  #左と下のキーを押しているとき
         (-5, 0):pg.transform.rotozoom(kk_img,0,1.0),  #左のキーを押しているとき
     }   #工科トンの進む方向と向きを決める。
-    acs = [a for a in range(1, 11)]
+    acs = [a for a in range(1, 11)]  #ボールの加速度の変更1－10まで
     while True:
         for event in pg.event.get():
             if event.type == pg.QUIT: 
                 return
             
         if kk_rct.colliderect(bakudan_rct):
+            screen.blit(bg_img,[0, 0])
+            screen.blit(kk_img_zako, kk_rct)  #なく画像に変更する
+            pg.display.update()  #ディスプレイをアップデートする
+            pg.time.delay(3000)  #3ビョウ間時を止める
+
             print("ゲームオーバー")
             return  #ゲームオーバー
         key_lst = pg.key .get_pressed()
         sum_mv = [0, 0]
 
-        for k, mv in delta.items():
+        for k, mv in delta.items():  #ボールが動供養にする
             if key_lst[k]:
                 sum_mv[0] += mv[0]
                 sum_mv[1] += mv[1]
