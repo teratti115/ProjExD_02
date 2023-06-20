@@ -23,8 +23,8 @@ def check_bound(rect):
         yoko = False
     if rect.top < 0 or HEIGHT < rect.bottom:
         tate = False
-
     return yoko, tate
+
 
 def main():
     pg.display.set_caption("逃げろ！こうかとん")
