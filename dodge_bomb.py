@@ -18,9 +18,12 @@ def main():
     #爆弾surface(bakudan)から爆弾rectから抽出する 
     bakudan_rct = bakudan.get_rect()
     bakudan_rct.center = bakudan_x ,bakudan_y
+    vx = 5  #練習２
+    vy = 5  #練習２
     bakudan.set_colorkey((0, 0, 0))
     clock = pg.time.Clock()
     tmr = 0
+
     
 
     while True:
@@ -30,6 +33,7 @@ def main():
 
         screen.blit(bg_img, [0, 0])
         screen.blit(kk_img, [900, 400])
+        bakudan_rct.move_ip(vx,vy)  #練習２
         screen.blit(bakudan,bakudan_rct)
 
         pg.display.update()
