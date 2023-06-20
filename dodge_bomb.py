@@ -11,6 +11,7 @@ delta = {
     pg.K_RIGHT:(+5, 0)
 }
 
+
 def check_bound(rect):
     """
     工科トンRect,爆弾rectが画面買い　or 画面内かを判定する関数
@@ -30,6 +31,7 @@ def main():
     bg_img = pg.image.load("ex02/fig/pg_bg.jpg")
     kk_img = pg.image.load("ex02/fig/3.png")
     kk_img = pg.transform.rotozoom(kk_img, 0, 2.0)
+    kk_img_r =pg.transform.flip(kk_img,True, False)
     kk_rct = kk_img.get_rect()
     kk_rct.center = 900, 400
     bakudan = pg.Surface((20, 20))  #練習１
@@ -44,8 +46,17 @@ def main():
     bakudan.set_colorkey((0, 0, 0))
     clock = pg.time.Clock()
     tmr = 0
-
-    
+    kk_muki = {
+        (0, 0):pg.transform.rotozoom(kk_img,0,1.0),  #キーを動かしてないときの工科トンの向き
+        (0, -5):pg.transform.rotozoom(kk_img_r,90,1.0),  #上に動かしているとき
+        (-5, -5):pg.transform.rotozoom(kk_img,-45,1.0),  #左と上のキー動かしているとき
+        (5, -5):pg.transform.rotozoom(kk_img_r,45,1.0),  #みぎと上のキーを押しているとき
+        (5, 0):pg.transform.rotozoom(kk_img_r,0,1.0),  #右のキーを押しているとき
+        (5, 5):pg.transform.rotozoom(kk_img_r,-45,1.0),  #右と下のキーを押しているとき
+        (0, 5):pg.transform.rotozoom(kk_img_r,-90,1.0),  #下のキーを押しているとき
+        (-5, 5):pg.transform.rotozoom(kk_img,45,1.0),  #左と下のキーを押しているとき
+        (-5, 0):pg.transform.rotozoom(kk_img,0,1.0),  #左のキーを押しているとき
+    } 
 
     while True:
         for event in pg.event.get():
@@ -57,16 +68,22 @@ def main():
             return  #ゲームオーバー
         key_lst = pg.key .get_pressed()
         sum_mv = [0, 0]
+
         for k, mv in delta.items():
             if key_lst[k]:
                 sum_mv[0] += mv[0]
                 sum_mv[1] += mv[1]
+        sum_mv_l = tuple(sum_mv)
+            
+        
+        
+
         kk_rct.move_ip(sum_mv)
         if check_bound(kk_rct) != (True, True):
             kk_rct.move_ip(-sum_mv[0], -sum_mv[1])
 
         screen.blit(bg_img, [0, 0])
-        screen.blit(kk_img, kk_rct)
+        screen.blit(kk_muki[sum_mv_l], kk_rct)
         bakudan_rct.move_ip(vx,vy)  #練習２
         yoko, tate = check_bound(bakudan_rct)
         if not yoko:
