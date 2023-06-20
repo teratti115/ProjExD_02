@@ -14,8 +14,8 @@ delta = {
 
 def check_bound(rect):
     """
-    工科トンRect,爆弾rectが画面買い　or 画面内かを判定する関数
-    因数：工科トんRect or　爆弾Rect
+    こうかとんRect,爆弾rectが画面買い　or 画面内かを判定する関数
+    因数：こうかとんRect or　爆弾Rect
     戻り値：横方向、縦方向の判定結果タプル (True:画面内/False:画面外)
     """
     yoko, tate = True, True
@@ -23,6 +23,7 @@ def check_bound(rect):
         yoko = False
     if rect.top < 0 or HEIGHT < rect.bottom:
         tate = False
+
     return yoko, tate
 
 def main():
